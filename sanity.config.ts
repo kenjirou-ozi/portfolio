@@ -17,7 +17,43 @@ export default defineConfig({
   basePath: '/studio', // Studio埋め込みパス
 
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('コンテンツ')
+          .items([
+            // サイト設定（シングルトン）
+            S.listItem()
+              .title('サイト設定')
+              .id('siteSettings')
+              .child(
+                S.document()
+                  .schemaType('siteSettings')
+                  .documentId('siteSettings')
+              ),
+            // プロフィール（シングルトン）
+            S.listItem()
+              .title('プロフィール')
+              .id('profile')
+              .child(
+                S.document()
+                  .schemaType('profile')
+                  .documentId('profile')
+              ),
+            // 区切り線
+            S.divider(),
+            // サービス
+            S.listItem()
+              .title('サービス')
+              .schemaType('service')
+              .child(S.documentTypeList('service').title('サービス一覧')),
+            // 制作実績
+            S.listItem()
+              .title('制作実績')
+              .schemaType('work')
+              .child(S.documentTypeList('work').title('制作実績一覧')),
+          ]),
+    }),
     visionTool(), // GROQクエリテスト用
   ],
 
