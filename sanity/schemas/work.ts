@@ -50,10 +50,8 @@ export const workType = defineType({
           title: '代替テキスト',
           type: 'string',
           description: '画像の説明文（アクセシビリティ対応）',
-          validation: (Rule) => Rule.required(),
         }),
       ],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'videoUrl',
