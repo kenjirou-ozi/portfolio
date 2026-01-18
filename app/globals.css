@@ -6,7 +6,6 @@
  * Paths are relative to this CSS file (app/globals.css).
  */
 @source "../components/**/*.tsx";
-@source "../src/design-patterns/**/*.tsx";
 @source "../lib/**/*.ts";
 @source "../app/**/*.tsx";
 
