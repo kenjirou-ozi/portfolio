@@ -1,6 +1,75 @@
 import { defineQuery } from 'next-sanity'
 
-// 型安全なクエリ定義
+// =====================================
+// Portfolio Queries
+// =====================================
+
+export const SITE_SETTINGS_QUERY = defineQuery(`
+  *[_type == "siteSettings"][0] {
+    _id,
+    catchphrase,
+    subCatchphrase,
+    siteTitle,
+    siteDescription,
+    heroVideoUrl
+  }
+`)
+
+export const PROFILE_QUERY = defineQuery(`
+  *[_type == "profile"][0] {
+    _id,
+    name,
+    nameEn,
+    bio,
+    strengths[] {
+      _type,
+      title,
+      description
+    },
+    workflow[] {
+      _type,
+      step,
+      title,
+      description
+    },
+    socialLinks[] {
+      _type,
+      platform,
+      url
+    }
+  }
+`)
+
+export const SERVICES_QUERY = defineQuery(`
+  *[_type == "service"] | order(order asc) {
+    _id,
+    title,
+    slug,
+    description,
+    icon,
+    order
+  }
+`)
+
+export const WORKS_QUERY = defineQuery(`
+  *[_type == "work"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    category,
+    description,
+    videoUrl,
+    targetCustomer,
+    duration,
+    publishedAt,
+    featured
+  }
+`)
+
+// =====================================
+// Legacy Blog Queries (from original template)
+// =====================================
+
 export const POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...12] {
     _id,

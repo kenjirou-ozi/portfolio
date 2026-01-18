@@ -1,67 +1,59 @@
-import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
-import { POSTS_QUERY } from '@/sanity/lib/queries'
+import {
+  SITE_SETTINGS_QUERY,
+  PROFILE_QUERY,
+  SERVICES_QUERY,
+  WORKS_QUERY,
+} from '@/sanity/lib/queries'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { Hero } from '@/components/sections/Hero'
+import { Services } from '@/components/sections/Services'
+import { Works } from '@/components/sections/Works'
+import { Profile } from '@/components/sections/Profile'
+import { Contact } from '@/components/sections/Contact'
 
 export default async function HomePage() {
-  const posts = await client.fetch(POSTS_QUERY).catch(() => [])
+  // Fetch all data from Sanity
+  const [siteSettings, profile, services, works] = await Promise.all([
+    client.fetch(SITE_SETTINGS_QUERY).catch(() => null),
+    client.fetch(PROFILE_QUERY).catch(() => null),
+    client.fetch(SERVICES_QUERY).catch(() => []),
+    client.fetch(WORKS_QUERY).catch(() => []),
+  ])
+
+  // Fallback data if Sanity fetch fails
+  const heroData = {
+    catchphrase: siteSettings?.catchphrase || 'AIで、映像の常識を変える',
+    subCatchphrase: siteSettings?.subCatchphrase || 'AI動画・AI漫画・デザインで、あなたのビジネスを加速',
+    heroVideoUrl: siteSettings?.heroVideoUrl,
+  }
+
+  const profileData = {
+    name: profile?.name || '林 憲二郎',
+    nameEn: profile?.nameEn,
+    bio: profile?.bio || 'デザイン歴12年。AIを活用した動画・漫画制作を行っています。',
+    strengths: profile?.strengths || [],
+    workflow: profile?.workflow || [],
+  }
 
   return (
-    <div className="min-h-screen bg-background p-8">
-      <main className="mx-auto max-w-4xl">
-        <h1 className="mb-8 text-4xl font-bold text-foreground">
-          ポートフォリオサイト
-        </h1>
+    <div className="relative">
+      <Header />
 
-        <div className="mb-8 rounded-lg bg-white p-6 shadow-md dark:bg-zinc-900">
-          <h2 className="mb-4 text-2xl font-semibold">Sanity Studio へようこそ</h2>
-          <p className="mb-4 text-zinc-600 dark:text-zinc-400">
-            コンテンツを管理するには、以下のリンクからSanity Studioにアクセスしてください。
-          </p>
-          <Link
-            href="/studio"
-            className="inline-block rounded-full bg-foreground px-6 py-3 text-background transition-colors hover:bg-zinc-700 dark:hover:bg-zinc-300"
-          >
-            Studio を開く
-          </Link>
-        </div>
+      <main>
+        <Hero {...heroData} />
 
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">ブログ記事</h2>
-          {posts.length === 0 ? (
-            <p className="text-zinc-600 dark:text-zinc-400">
-              まだ記事がありません。Sanity Studioで記事を作成してください。
-            </p>
-          ) : (
-            <ul className="space-y-4">
-              {posts.map((post: any) => (
-                <li
-                  key={post._id}
-                  className="rounded-lg bg-white p-6 shadow-md dark:bg-zinc-900"
-                >
-                  <h3 className="mb-2 text-xl font-semibold">
-                    <Link
-                      href={`/posts/${post.slug.current}`}
-                      className="hover:text-zinc-600 dark:hover:text-zinc-300"
-                    >
-                      {post.title}
-                    </Link>
-                  </h3>
-                  {post.excerpt && (
-                    <p className="text-zinc-600 dark:text-zinc-400">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  {post.publishedAt && (
-                    <p className="mt-2 text-sm text-zinc-500">
-                      {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {services.length > 0 && <Services services={services} />}
+
+        {works.length > 0 && <Works works={works} />}
+
+        <Profile {...profileData} />
+
+        <Contact />
       </main>
+
+      <Footer socialLinks={profile?.socialLinks} />
     </div>
   )
 }
