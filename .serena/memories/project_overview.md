@@ -15,18 +15,18 @@
 - **CMS**: Sanity 5.x (embedded studio at /studio)
 - **Testing**: Playwright (E2E)
 
-## ディレクトリ構成
+## ディレクトリ構成 (Updated 2025-01-18)
 ```
-portfolio/
+portfolio/ (122 files after cleanup)
 ├── app/                    # Next.js App Router
-│   ├── layout.tsx         # ルートレイアウト
-│   ├── page.tsx           # ホームページ (SSR)
-│   ├── globals.css        # グローバルスタイル (CSS変数定義)
+│   ├── layout.tsx         # ルートレイアウト (Orbitron + IBM Plex Sans)
+│   ├── page.tsx           # ホームページ (SSR with Sanity)
+│   ├── globals.css        # Tailwind CSS 4 + CSS変数
 │   └── studio/[[...tool]]/ # Sanity Studio (embedded)
-├── components/
+├── components/             # 本番コンポーネント (Tailwind classes)
 │   ├── layout/            # Header, Footer
 │   ├── sections/          # Hero, Services, Works, Profile, Contact
-│   └── ui/                # Card, Button, Badge, Container, etc.
+│   └── ui/                # Badge, Button, Card, Container, Heading, Section, ServiceIcon
 ├── sanity/
 │   ├── schemas/           # Sanityスキーマ定義
 │   └── lib/               # クライアント, クエリ
@@ -36,11 +36,25 @@ portfolio/
 └── public/                # 静的アセット
 ```
 
+**Note**: `src/design-patterns/` and `app/design-preview/` were removed during cleanup (2025-01-18) as prototype code.
+
 ## Sanityスキーマ
 - **siteSettings**: サイト設定 (シングルトン)
+  - Hero動画トグル (YouTube/MP4切替)
+  - キャッチフレーズ、SEO設定
 - **profile**: プロフィール (シングルトン)
-- **service**: サービス一覧
+- **service**: サービス一覧 (iconフィールドなし)
 - **work**: 制作実績
+
+## 主要コンポーネント (Updated 2026-01-20)
+- **Hero**: YouTube/MP4動画の条件付きレンダリング
+- **Services**: Embla Carouselによるカルーセル表示
+- **Works**: 制作実績グリッド
+- **Profile**: 
+  - ProfileHero: 背景写真レイアウト + テキストオーバーレイ
+  - StrengthCard: Feature277スタイル（アイコン + ホバーエフェクト）
+  - WorkflowItem: Process3スタイル（横並びステップ + コネクター）
+- **Contact**: お問い合わせフォーム (Resend API)
 
 ## デザインシステム
 - **テーマ**: ダークサイバーパンク風

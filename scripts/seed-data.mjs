@@ -18,7 +18,8 @@ const testData = [
     _id: 'siteSettings',
     catchphrase: 'AIで、映像の常識を変える',
     subCatchphrase: 'AI動画・AI漫画・デザインで、あなたのビジネスを加速',
-    heroVideoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    heroVideoSource: 'youtube',
+    heroYoutubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     siteTitle: 'KENJIROU Portfolio',
     siteDescription: 'AI動画制作・AI漫画・デザインサービスのポートフォリオサイト',
   },
@@ -92,7 +93,6 @@ const testData = [
       current: 'ai-video',
     },
     description: 'AIを活用した高品質な動画制作サービス。キャラクターの一貫性を保ちながら、短期間で魅力的な映像を制作します。企画から編集まで一貫して対応します。',
-    icon: '🎬',
     order: 1,
   },
   {
@@ -104,7 +104,6 @@ const testData = [
       current: 'ai-manga',
     },
     description: 'AIを活用した漫画・イラスト制作サービス。広告漫画、説明漫画など、様々な用途に対応します。オリジナルキャラクターの制作も可能です。',
-    icon: '📚',
     order: 2,
   },
   {
@@ -116,7 +115,6 @@ const testData = [
       current: 'design',
     },
     description: '12年の経験を活かしたデザインサービス。ロゴ、バナー、Webデザインなど幅広く対応。AIツールを駆使して高品質なビジュアルを提供します。',
-    icon: '🎨',
     order: 3,
   },
 
@@ -182,7 +180,7 @@ async function seedData() {
 
   for (const doc of testData) {
     try {
-      const result = await client.createOrReplace(doc)
+      await client.createOrReplace(doc)
       console.log(`✅ ${doc._type}: ${doc._id || doc.title}`)
       successCount++
     } catch (error) {

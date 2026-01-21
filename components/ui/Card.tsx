@@ -34,7 +34,7 @@ export function Card({
 
   const baseClasses = `relative transition-all duration-300 overflow-hidden border-2 border-[var(--color-border-medium)] ${variantClasses[variant]} ${className}`
 
-  const CardContent = () => (
+  const cardContent = (
     <>
       {decorative && (
         <>
@@ -60,7 +60,7 @@ export function Card({
         initial="rest"
         whileHover="hover"
       >
-        <CardContent />
+        {cardContent}
       </motion.a>
     )
   }
@@ -72,7 +72,7 @@ export function Card({
       initial="rest"
       whileHover="hover"
     >
-      <CardContent />
+      {cardContent}
     </motion.div>
   )
 }

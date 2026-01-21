@@ -13,6 +13,8 @@ interface ButtonProps {
   href?: string
   onClick?: () => void
   className?: string
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 const sizeClasses = {
@@ -34,21 +36,24 @@ export function Button({
   href,
   onClick,
   className = '',
+  type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const buttonVariants = {
     initial: { scale: 1 },
     hover: {
-      scale: 1.05,
+      scale: disabled ? 1 : 1.05,
       transition: { duration: 0.2, ease: 'easeOut' as const }
     },
-    tap: { scale: 0.95 },
+    tap: { scale: disabled ? 1 : 0.95 },
   }
 
-  const baseClasses = `inline-flex items-center justify-center font-semibold transition-all duration-300 relative overflow-hidden uppercase tracking-wider no-underline cursor-pointer border-2 ${sizeClasses[size]} ${variantClasses[variant]} ${className}`
+  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : ''
+  const baseClasses = `inline-flex items-center justify-center font-semibold transition-all duration-300 relative overflow-hidden uppercase tracking-wider no-underline cursor-pointer border-2 ${sizeClasses[size]} ${variantClasses[variant]} ${disabledClasses} ${className}`
 
   const cornerAccentColor = variant === 'secondary' ? 'border-[var(--color-accent-gold)]' : 'border-[var(--color-text-primary)]'
 
-  const ButtonContent = () => (
+  const buttonContent = (
     <>
       {/* Geometric corner accents */}
       <span className={`absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 ${cornerAccentColor} opacity-60`} />
@@ -67,21 +72,23 @@ export function Button({
         whileHover="hover"
         whileTap="tap"
       >
-        <ButtonContent />
+        {buttonContent}
       </motion.a>
     )
   }
 
   return (
     <motion.button
+      type={type}
       onClick={onClick}
+      disabled={disabled}
       className={baseClasses}
       variants={buttonVariants}
       initial="initial"
       whileHover="hover"
       whileTap="tap"
     >
-      <ButtonContent />
+      {buttonContent}
     </motion.button>
   )
 }

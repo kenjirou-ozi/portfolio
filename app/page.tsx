@@ -26,15 +26,19 @@ export default async function HomePage() {
   const heroData = {
     catchphrase: siteSettings?.catchphrase || 'AIで、映像の常識を変える',
     subCatchphrase: siteSettings?.subCatchphrase || 'AI動画・AI漫画・デザインで、あなたのビジネスを加速',
-    heroVideoUrl: siteSettings?.heroVideoUrl,
+    heroVideoSource: siteSettings?.heroVideoSource as 'youtube' | 'mp4' | undefined,
+    heroYoutubeUrl: siteSettings?.heroYoutubeUrl,
+    heroVideoFileUrl: siteSettings?.heroVideoFileUrl,
   }
 
   const profileData = {
     name: profile?.name || '林 憲二郎',
     nameEn: profile?.nameEn,
     bio: profile?.bio || 'デザイン歴12年。AIを活用した動画・漫画制作を行っています。',
+    profileImage: profile?.profileImage,
     strengths: profile?.strengths || [],
     workflow: profile?.workflow || [],
+    socialLinks: profile?.socialLinks,
   }
 
   return (

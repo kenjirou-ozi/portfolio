@@ -27,9 +27,9 @@ export const profileType = defineType({
     }),
     defineField({
       name: 'profileImage',
-      title: 'プロフィール画像',
+      title: 'プロフィール写真',
       type: 'image',
-      description: 'プロフィール写真（推奨サイズ: 400x400px）',
+      description: '推奨: 800x1000px以上、縦長（ポートレート）、高品質な写真を使用してください',
       options: {
         hotspot: true,
       },
@@ -38,9 +38,10 @@ export const profileType = defineType({
           name: 'alt',
           title: '代替テキスト',
           type: 'string',
-          description: '画像の説明文（アクセシビリティ対応）',
+          description: 'アクセシビリティ用の画像説明（例: デザイナー林憲二郎のプロフィール写真）',
         }),
       ],
+      validation: (Rule) => Rule.required().error('プロフィール写真は必須です'),
     }),
     defineField({
       name: 'strengths',

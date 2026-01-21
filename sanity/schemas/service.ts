@@ -32,12 +32,6 @@ export const serviceType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'icon',
-      title: 'アイコン',
-      type: 'string',
-      description: 'アイコン名またはemoji（例: 🎬、🎨）',
-    }),
-    defineField({
       name: 'order',
       title: '表示順',
       type: 'number',

@@ -11,7 +11,9 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     subCatchphrase,
     siteTitle,
     siteDescription,
-    heroVideoUrl
+    heroVideoSource,
+    heroYoutubeUrl,
+    "heroVideoFileUrl": heroVideoFile.asset->url
   }
 `)
 
@@ -21,6 +23,15 @@ export const PROFILE_QUERY = defineQuery(`
     name,
     nameEn,
     bio,
+    profileImage {
+      asset->{
+        _id,
+        url
+      },
+      alt,
+      hotspot,
+      crop
+    },
     strengths[] {
       _type,
       title,
@@ -46,7 +57,6 @@ export const SERVICES_QUERY = defineQuery(`
     title,
     slug,
     description,
-    icon,
     order
   }
 `)
@@ -62,7 +72,9 @@ export const WORKS_QUERY = defineQuery(`
     targetCustomer,
     duration,
     publishedAt,
-    featured
+    featured,
+    "thumbnailUrl": thumbnail.asset->url,
+    "thumbnailAlt": thumbnail.alt
   }
 `)
 

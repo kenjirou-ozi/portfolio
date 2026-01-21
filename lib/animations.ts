@@ -301,7 +301,7 @@ export interface CounterProps {
   duration?: number
 }
 
-export const counterAnimation = (from: number, to: number, duration: number = 2): any => ({
+export const counterAnimation = (from: number, to: number, duration: number = 2): { from: number; to: number; transition: { duration: number; ease: string } } => ({
   from,
   to,
   transition: {
